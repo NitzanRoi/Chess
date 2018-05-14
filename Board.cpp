@@ -37,8 +37,8 @@ using std::abs;
 bool Board::checkLegal(int *move, string& playerColor, Board& board)
 {
 	if (!board(move[POS_X], move[POS_Y]).hasSoldier() ||
-        board(move[POS_X], move[POS_Y]).getSoldierColor() != playerColor ||
-        board(move[DEST_X], move[DEST_Y]).getSoldierColor() == playerColor)
+        	board(move[POS_X], move[POS_Y]).getSoldierColor() != playerColor ||
+        	board(move[DEST_X], move[DEST_Y]).getSoldierColor() == playerColor)
 	{
 		cout << ILLEGAL_MOVE;
 		return false;
@@ -97,7 +97,7 @@ bool Board::pawnIsOnTheBoard(int posX, int posY, int destX, int destY, const str
 			return true;
 		}
 		return _board[posX][posY].getThisSoldier()->checkMove(posX, posY, destX, destY) &&
-               !_board[destX][destY].hasSoldier();
+               		!_board[destX][destY].hasSoldier();
 	}
 	if (abs(posX - destX) == MAX_PAWN_STEP && posY - destY == MAX_PAWN_STEP && _board[destX][destY].hasSoldier())
 	{
@@ -118,10 +118,10 @@ bool Board::pawnIsOnTheBoard(int posX, int posY, int destX, int destY, const str
 */
 bool Board::leapingCheck(int posX, int posY, int destX, int destY) const
 {
-	int dirX = destX - posX;
-	int dirY = destY - posY;
-	int moveX = dirX > ON_THE_SPOT ? RIGHT : (dirX == ON_THE_SPOT ?  ON_THE_SPOT : LEFT);
-	int moveY = dirY > ON_THE_SPOT ? UP : (dirY == ON_THE_SPOT ?  ON_THE_SPOT : DOWN);
+    int dirX = destX - posX;
+    int dirY = destY - posY;
+    int moveX = dirX > ON_THE_SPOT ? RIGHT : (dirX == ON_THE_SPOT ?  ON_THE_SPOT : LEFT);
+    int moveY = dirY > ON_THE_SPOT ? UP : (dirY == ON_THE_SPOT ?  ON_THE_SPOT : DOWN);
     if(dirX == 1 || dirY == 1)// LOGIC, NOT MAGIC
     {
         return true;
@@ -139,22 +139,22 @@ bool Board::leapingCheck(int posX, int posY, int destX, int destY) const
 		}
 	}
 	if (abs(dirX) > abs(dirY))
-    {
-		for (int i = 1 ; i < abs(dirX) ; i++)// LOGIC, NOT MAGIC
-        {
+    	{
+		for (int i = 1 ; i < abs(dirX) ; i++)
+		{
 			if (_board[posX + moveX][posY].hasSoldier())
-            {
+            		{
 				return false;
 			}
 			posX += moveX;
 		}
 	}
 	else if (abs(dirX) < abs(dirY))
-    {
-		for (int i = 1; i < abs(dirY) ; i++)// LOGIC, NOT MAGIC
-        {
+    	{
+		for (int i = 1; i < abs(dirY) ; i++)
+        	{
 			if (_board[posX][posY + moveY].hasSoldier())
-            {
+            		{
 				return false;
 			}
 			posY += moveY;
@@ -169,34 +169,34 @@ bool Board::leapingCheck(int posX, int posY, int destX, int destY) const
 Board::Board() : _kingWhiteX(4), _kingWhiteY(0), _kingBlackX(4), _kingBlackY(7), _mate(false),
                  _end(false)
 {
-	_board = new Square*[SIZE];
-	for (int i = 0; i < SIZE; i++)
-	{
-		_board[i] = new Square[SIZE];
-	}
+    _board = new Square*[SIZE];
+    for (int i = 0; i < SIZE; i++)
+    {
+	_board[i] = new Square[SIZE];
+    }
     _continue = true;
     _check = false;
-	string tmpColor = GREEN;
-	for (int i = 0; i < SIZE; ++i)
+    string tmpColor = GREEN;
+    for (int i = 0; i < SIZE; ++i)
+    {
+	for (int j = 0; j < SIZE ; j++)
 	{
-		for (int j = 0; j < SIZE ; j++)
-		{
             _board[j][i].setSquareColor(tmpColor);
-			tmpColor = tmpColor == BLUE ? GREEN : BLUE;
-		}
+	    tmpColor = tmpColor == BLUE ? GREEN : BLUE;
+	}
         tmpColor = tmpColor == BLUE ? GREEN : BLUE;
-	}
-	for(int i = 0; i < SIZE ; i++)
-	{
-		Soldier* gringo = new Pawn;
-		_board[i][WHITE_PAWNS].setSquareSoldier(gringo, WHITE);
+    }
+    for(int i = 0; i < SIZE ; i++)
+    {
+	Soldier* gringo = new Pawn;
+	_board[i][WHITE_PAWNS].setSquareSoldier(gringo, WHITE);
         _board[i][WHITE_PAWNS].changeHasSoldier();
-		Soldier* mualem = new Pawn;
-		_board[i][BLACK_PAWNS].setSquareSoldier(mualem, BLACK);
+	Soldier* mualem = new Pawn;
+	_board[i][BLACK_PAWNS].setSquareSoldier(mualem, BLACK);
         _board[i][BLACK_PAWNS].changeHasSoldier();
-	}
-	_initSoldiers(WHITE);
-	_initSoldiers(BLACK);
+    }
+    _initSoldiers(WHITE);
+    _initSoldiers(BLACK);
 }
 
 /**
@@ -273,8 +273,8 @@ Board::Board(const Board& other)
 	_kingWhiteY = other._kingWhiteY;
 	_kingBlackX = other._kingBlackX;
 	_kingBlackY = other._kingBlackY;
-    _mate = other._mate;
-    _end = other._end;
+   	 _mate = other._mate;
+    	_end = other._end;
 }
 
 /**
@@ -285,23 +285,23 @@ void Board::_initSoldiers(string color)
 {
 	int line = color == WHITE ? WHITE_LINE : BLACK_LINE;
 	Soldier* rook1 = new Rook;
-    rook1->setLeap(false);
+    	rook1->setLeap(false);
 	Soldier* knight1 = new Knight;
 	Soldier* bishop1 = new Bishop;
-    bishop1->setLeap(false);
+   	 bishop1->setLeap(false);
 	_board[FIRST_ROOK][line].setSquareSoldier(rook1, color);
 	_board[FIRST_KNIGHT][line].setSquareSoldier(knight1, color);
 	_board[FIRST_BISHOP][line].setSquareSoldier(bishop1, color);
 	Soldier* king = new King;
 	Soldier* queen = new Queen;
-    queen->setLeap(false);
+    	queen->setLeap(false);
 	_board[QUEEN_SPOT][line].setSquareSoldier(queen, color);
 	_board[KING_SPOT][line].setSquareSoldier(king, color);
 	Soldier* rook2 = new Rook;
-    rook2->setLeap(false);
+    	rook2->setLeap(false);
 	Soldier* knight2 = new Knight;
 	Soldier* bishop2 = new Bishop;
-    bishop2->setLeap(false);
+    	bishop2->setLeap(false);
 	_board[SEC_BISHOP][line].setSquareSoldier(bishop2, color);
 	_board[SEC_KNIGHT][line].setSquareSoldier(knight2, color);
 	_board[SEC_ROOK][line].setSquareSoldier(rook2, color);
@@ -343,13 +343,13 @@ void Board::_printHelper(const bool firstLine) const
  */
 ostream& operator << (ostream& os, const Board& b)
 {
-    b._printHelper(true);
+   	b._printHelper(true);
 	for (int i = END_LINE; i >= START_LINE; --i)
 	{
 		os << (i + 1) << SPACE;
 		for (int j = 0; j < SIZE; ++j)
 		{
-            os << b._board[j][i];
+            		os << b._board[j][i];
 		}
 		os << SPACE << (i + 1) << NEW_LINE;
 	}
@@ -380,7 +380,7 @@ bool Board::check() const
  */
 bool Board::moveSoldier(const int *move)
 {
-	Board tmpBoard(*this);
+    Board tmpBoard(*this);
     string currentUserColor = _board[move[POS_X]][move[POS_Y]].getSoldierColor();
     string enemyColour = currentUserColor == WHITE ? BLACK : WHITE;
     int userKingX = currentUserColor == WHITE ? _kingWhiteX : _kingBlackX;
@@ -393,7 +393,7 @@ bool Board::moveSoldier(const int *move)
         }
         _check = false;
     }
-	swap(_board[move[DEST_X]][move[DEST_Y]], _board[move[POS_X]][move[POS_Y]]);
+    swap(_board[move[DEST_X]][move[DEST_Y]], _board[move[POS_X]][move[POS_Y]]);
     if (_board[move[DEST_X]][move[DEST_Y]].getThisSoldier()->getItsUnicode() == KING_UNI)
     {
         userKingX = move[DEST_X];
@@ -404,26 +404,26 @@ bool Board::moveSoldier(const int *move)
         *this = tmpBoard;
         return false;
     }
-	if ((_board[move[DEST_X]][move[DEST_Y]].getThisSoldier()->getItsUnicode() == KING_UNI) ||
-		(_board[move[DEST_X]][move[DEST_Y]].getThisSoldier()->getItsUnicode() == ROOK_UNI) ||
-		(_board[move[DEST_X]][move[DEST_Y]].getThisSoldier()->getItsUnicode() == PAWN_UNI))
-	{
-		_board[move[DEST_X]][move[DEST_Y]].getThisSoldier()->incrementTurn();
-	}
-	bool pawn = _board[move[DEST_X]][move[DEST_Y]].getThisSoldier()->getItsUnicode() == PAWN_UNI;
-	if (pawn && (move[DEST_Y] == START_LINE || move[DEST_Y] == END_LINE))
-	{
-		Square square = _board[move[DEST_X]][move[DEST_Y]];
-		_pawnBecomeAQueen(square, _board[move[DEST_X]][move[DEST_Y]].getSoldierColor());
-	}
-	if (_board[move[DEST_X]][move[DEST_Y]].getThisSoldier()->getItsUnicode() == KING_UNI)
-	{
-		string color = _board[move[DEST_X]][move[DEST_Y]].getSoldierColor();
-		_kingWhiteX = color == WHITE ? move[DEST_X] : _kingWhiteX;
-		_kingWhiteY = color == WHITE ? move[DEST_Y] : _kingWhiteY;
-		_kingBlackX = color == BLACK ? move[DEST_X] : _kingBlackX;
-		_kingBlackY = color == BLACK ? move[DEST_Y] : _kingBlackY;
-	}
+    if ((_board[move[DEST_X]][move[DEST_Y]].getThisSoldier()->getItsUnicode() == KING_UNI) ||
+	(_board[move[DEST_X]][move[DEST_Y]].getThisSoldier()->getItsUnicode() == ROOK_UNI) ||
+	(_board[move[DEST_X]][move[DEST_Y]].getThisSoldier()->getItsUnicode() == PAWN_UNI))
+    {
+	_board[move[DEST_X]][move[DEST_Y]].getThisSoldier()->incrementTurn();
+    }
+    bool pawn = _board[move[DEST_X]][move[DEST_Y]].getThisSoldier()->getItsUnicode() == PAWN_UNI;
+    if (pawn && (move[DEST_Y] == START_LINE || move[DEST_Y] == END_LINE))
+    {
+	Square square = _board[move[DEST_X]][move[DEST_Y]];
+	_pawnBecomeAQueen(square, _board[move[DEST_X]][move[DEST_Y]].getSoldierColor());
+    }
+    if (_board[move[DEST_X]][move[DEST_Y]].getThisSoldier()->getItsUnicode() == KING_UNI)
+    {
+	string color = _board[move[DEST_X]][move[DEST_Y]].getSoldierColor();
+	_kingWhiteX = color == WHITE ? move[DEST_X] : _kingWhiteX;
+	_kingWhiteY = color == WHITE ? move[DEST_Y] : _kingWhiteY;
+	_kingBlackX = color == BLACK ? move[DEST_X] : _kingBlackX;
+	_kingBlackY = color == BLACK ? move[DEST_Y] : _kingBlackY;
+    }
     userKingX = currentUserColor == WHITE ? _kingBlackX : _kingWhiteX;
     userKingY = currentUserColor == WHITE ? _kingBlackY : _kingWhiteY;
     if (_enemyThreat(userKingX, userKingY, currentUserColor)) // detect check
@@ -522,7 +522,7 @@ void Board::_assignForCast(string &playerColor, string &enemy, int &line, int &r
 		line = BLACK_LINE;
 	}
 	emptyS == FIRST_ROOK ? (rook = FIRST_ROOK, rookDest = BIG_CAST_ROOK_DEST, kingDest = BIG_CAST_KING_DEST) :
-	(rook = SEC_ROOK, rookDest = MINI_CAST_ROOK_DEST, kingDest = MINI_CAST_KING_DEST);
+				(rook = SEC_ROOK, rookDest = MINI_CAST_ROOK_DEST, kingDest = MINI_CAST_KING_DEST);
 }
 
 /**
