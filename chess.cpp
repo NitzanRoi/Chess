@@ -61,8 +61,8 @@ void getPlayersNames(string &whitePlayer, string &blackPlayer)
  */
 bool getUserCoordinate(string& playerName, string& playerColor, int *move, Board& board, bool check)
 {
-	string str;
-	cout << playerName << ENTER_MOVE;
+    string str;
+    cout << playerName << ENTER_MOVE;
     getline(cin, str);
     if (cin.bad())
     {
@@ -75,15 +75,15 @@ bool getUserCoordinate(string& playerName, string& playerColor, int *move, Board
             cout << ILLEGAL_MOVE;
             return false;
         }
-		move[POS_X] = CASTLING;
+	move[POS_X] = CASTLING;
         return true;
     }
     else
     {
-		move[POS_X] = str[POS_X] - ASCII_CONVERT_CAPITAL_LETTER;
-		move[POS_Y] = str[POS_Y] - ASCII_CONVERT_NUMBER - 1;
-		move[DEST_X] = str[DEST_X] - ASCII_CONVERT_CAPITAL_LETTER;
-		move[DEST_Y] = str[DEST_Y] - ASCII_CONVERT_NUMBER - 1;
+	move[POS_X] = str[POS_X] - ASCII_CONVERT_CAPITAL_LETTER;
+	move[POS_Y] = str[POS_Y] - ASCII_CONVERT_NUMBER - 1;
+	move[DEST_X] = str[DEST_X] - ASCII_CONVERT_CAPITAL_LETTER;
+	move[DEST_Y] = str[DEST_Y] - ASCII_CONVERT_NUMBER - 1;
     }
     for (int i = 0; i < MOVE_SIZE ; i++)
     {
